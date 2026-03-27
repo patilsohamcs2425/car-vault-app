@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private apiUrl = 'https://car-vault-app.onrender.com/';
+  private apiUrl = 'https://car-vault-app.onrender.com/api/auth';
 
   constructor(private http: HttpClient) {}
 

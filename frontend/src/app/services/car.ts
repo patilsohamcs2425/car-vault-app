@@ -5,7 +5,7 @@ import { AuthService } from './auth';
 
 @Injectable({ providedIn: 'root' })
 export class CarService {
-  private apiUrl = 'https://car-vault-app.onrender.com/';
+  private apiUrl = 'https://car-vault-app.onrender.com/api/cars';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
