@@ -3,7 +3,7 @@ const router = express.Router();
 const jwt = require('jsonwebtoken'); // 1. Add this
 const carController = require('../controllers/carController');
 
-// 2. ADD THIS SECURITY MIDDLEWARE RIGHT HERE
+
 const SECRET_KEY = process.env.JWT_SECRET || "jwtSecret"; 
 
 const verifyToken = (req, res, next) => {

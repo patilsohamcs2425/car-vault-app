@@ -1,29 +1,15 @@
 const Car = require("../models/carModel");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "jwtSecret";
 
-// Helper: Extract User ID from Token
-const getUserId = (req) => {
-    try {
-        const token = req.headers["authorization"]?.split(" ")[1]; // Remove 'Bearer '
-        if (!token) return null;
-        const decoded = jwt.verify(token, SECRET_KEY);
-        return decoded.user.id;
-    } catch (err) {
-        return null;
-    }
-};
+// FIX: This must match your AuthController and Routes exactly!
+const SECRET_KEY = process.env.JWT_SECRET || "jwtSecret";
 
 exports.getAllCars = async (req, res) => {
     try {
-        // Extract Query Parameters
         const { search, year, sort } = req.query;
-
-        // 1. Build Search/Filter Query
         let query = {};
         
         if (search) {
-            // Search in Company OR Model (Case Insensitive)
             query.$or = [
                 { company: { $regex: search, $options: 'i' } },
                 { model: { $regex: search, $options: 'i' } }
@@ -34,12 +20,11 @@ exports.getAllCars = async (req, res) => {
             query.year = Number(year);
         }
 
-        // 2. Build Sort Option
         let sortOption = {};
-        if (sort === 'priceAsc') sortOption.price = 1;      // Low to High
-        if (sort === 'priceDesc') sortOption.price = -1;    // High to Low
-        if (sort === 'yearDesc') sortOption.year = -1;      // Newest First
-        if (sort === 'yearAsc') sortOption.year = 1;        // Oldest First
+        if (sort === 'priceAsc') sortOption.price = 1;
+        if (sort === 'priceDesc') sortOption.price = -1;
+        if (sort === 'yearDesc') sortOption.year = -1;
+        if (sort === 'yearAsc') sortOption.year = 1;
 
         const cars = await Car.find(query).sort(sortOption);
         res.status(200).json(cars);
@@ -60,14 +45,31 @@ exports.getCarById = async (req, res) => {
 
 exports.createCar = async (req, res) => {
     try {
-        const userId = getUserId(req);
-        if (!userId) return res.status(401).json({ success: false, message: "Unauthorized" });
+        // Senior Dev Strategy: 
+        // We now get the user ID from the 'verifyToken' middleware we added to the route.
+        // If req.user exists, use it. If not, try the manual check as a backup.
+        let userId = req.user ? req.user.id : null;
 
+        if (!userId) {
+            const token = req.headers["authorization"]?.split(" ")[1];
+            if (token) {
+                const decoded = jwt.verify(token, SECRET_KEY);
+                userId = decoded.user.id;
+            }
+        }
+
+        if (!userId) {
+            return res.status(401).json({ success: false, message: "Unauthorized: Please log in again" });
+        }
+
+        // Create the car and link it to the logged-in user
         const car = new Car({ ...req.body, owner: userId });
         await car.save();
-        res.status(201).json({ success: true, car });
+        
+        res.status(201).json({ success: true, car, message: "Car saved successfully!" });
     } catch (error) {
-        res.status(500).json({ success: false, message: error.message });
+        console.error("Create Car Error:", error.message);
+        res.status(500).json({ success: false, message: "Error saving car", debug: error.message });
     }
 };
 
