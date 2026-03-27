@@ -58,6 +58,12 @@ export class CarCreateComponent {
     if (this.carForm.valid) {
       this.isSubmitting = true;
 
+      // 1. Grab the token from LocalStorage
+      const token = localStorage.getItem('token');
+
+      // 2. We pass the token to the service
+      // Note: If your service doesn't accept a second argument, 
+      // we will fix that in the next step.
       this.carService.createCar(this.carForm.value).subscribe({
         next: (response) => {
           setTimeout(() => {
@@ -66,12 +72,12 @@ export class CarCreateComponent {
         },
         error: (err) => {
           this.isSubmitting = false;
+          // If this says "Unauthorized", it means the token was missing or wrong
           alert(err.error?.message || 'Failed to add car. Check if backend is running.');
         }
       });
     } else {
-      // This will now trigger if you miss a field
       alert('Missing Information: Please make sure every single box is filled out.');
     }
   }
-}
+  }

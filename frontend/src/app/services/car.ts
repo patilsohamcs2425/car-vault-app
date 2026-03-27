@@ -9,33 +9,35 @@ export class CarService {
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 
+  // This helper creates the "ID Card" for every request
   private getHeaders() {
-    const token = this.authService.getToken();
+    const token = this.authService.getToken() || localStorage.getItem('token');
+    
+    // DEBUG: If you see 'null' in your console, you aren't logged in properly!
+    console.log("Using Token for Request:", token ? "Token Found" : "TOKEN IS MISSING");
+
     return {
       headers: new HttpHeaders({
         'Authorization': `Bearer ${token}`,
-        'Cache-Control': 'no-cache', // ⬅️ NEW: Force fresh data
-        'Pragma': 'no-cache'         // ⬅️ NEW: Force fresh data
+        'Cache-Control': 'no-cache', 
+        'Pragma': 'no-cache'        
       })
     };
   }
 
-  // We add a timestamp 't' to the URL to make every request unique.
-  // This forces the browser to ignore the 304 cache and get a 200 OK.
-  
   getAllCars(search: string = '', year: string = '', sort: string = ''): Observable<any> {
     let params = new HttpParams()
       .set('search', search)
       .set('year', year)
       .set('sort', sort)
-      .set('t', new Date().getTime().toString()); // ⬅️ Unique timestamp
+      .set('t', new Date().getTime().toString()); 
 
     return this.http.get(`${this.apiUrl}/getAllCars`, { ...this.getHeaders(), params });
   }
 
   getCarById(id: string): Observable<any> {
-    // Add timestamp to URL
-    return this.http.get(`${this.apiUrl}/getCarById/${id}?t=${new Date().getTime()}`, this.getHeaders());
+    const urlWithTimestamp = `${this.apiUrl}/getCarById/${id}?t=${new Date().getTime()}`;
+    return this.http.get(urlWithTimestamp, this.getHeaders());
   }
 
   createCar(car: any): Observable<any> {
