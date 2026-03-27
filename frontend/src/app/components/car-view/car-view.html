@@ -1,0 +1,48 @@
+<div class="view-container" style="max-width: 900px; margin: 2rem auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08);">
+  
+  <button routerLink="/cars" style="margin-bottom: 25px; background: #7f8c8d; color: white; border: none; padding: 10px 20px; border-radius: 6px; cursor: pointer; font-weight: bold; font-size: 1rem; transition: background 0.3s;">
+    ← Back to Dashboard
+  </button>
+  
+  <div *ngIf="car" style="display: flex; gap: 40px; flex-wrap: wrap; align-items: flex-start;">
+    
+    <div style="flex: 1; min-width: 300px;">
+      <img [src]="car.image" 
+           alt="Car Image" 
+           style="width: 100%; border-radius: 10px; object-fit: cover; box-shadow: 0 4px 12px rgba(0,0,0,0.15);" 
+           onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/400px-No_image_available.svg.png'">
+    </div>
+    
+    <div class="details" style="flex: 1; min-width: 300px;">
+      <h1 style="margin-top: 0; color: #2c3e50; font-size: 2.5rem; border-bottom: 3px solid #3498db; padding-bottom: 10px;">
+        {{car.company}} {{car.model}}
+      </h1>
+      
+      <div style="margin-top: 20px; font-size: 1.1rem; color: #555; line-height: 1.8;">
+        <p><strong>Manufacturing Year:</strong> <span style="background: #eef2f3; padding: 4px 10px; border-radius: 4px; color: #2c3e50; font-weight: bold;">{{car.year}}</span></p>
+        <p><strong>Exterior Color:</strong> {{car.color}}</p>
+        <p><strong>License Plate:</strong> <span style="text-transform: uppercase; letter-spacing: 1px; font-weight: bold;">{{car.carNumber}}</span></p>
+      </div>
+
+      <div style="margin-top: 30px; background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 6px solid #27ae60;">
+        <p style="margin: 0; font-size: 1.2rem; color: #333;">
+          <strong>Asking Price:</strong> <br>
+          <span style="color: #27ae60; font-size: 2.2rem; font-weight: 800;">₹{{car.price | number}}</span>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="errorMessage" style="margin-top: 20px; padding: 25px; background: #ffebee; color: #c62828; text-align: center; border-radius: 8px; border: 1px solid #ef9a9a;">
+    <h2 style="margin-top: 0; font-size: 1.8rem;">❌ Error Loading Car</h2>
+    <p style="font-size: 1.2rem; font-weight: bold;">{{ errorMessage }}</p>
+    <p style="margin-top: 10px; color: #b71c1c;">Try going back to the dashboard or logging in again.</p>
+  </div>
+
+  <div *ngIf="!car && !errorMessage" style="text-align: center; padding: 60px 0;">
+    <p style="font-size: 1.5rem; color: #3498db; font-weight: bold; animation: pulse 1.5s infinite;">
+      ⏳ Fetching Car Details...
+    </p>
+  </div>
+
+</div>

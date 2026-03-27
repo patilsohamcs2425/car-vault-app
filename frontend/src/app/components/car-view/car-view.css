@@ -1,0 +1,34 @@
+.view-container {
+  animation: fadeInUp 0.5s ease-out;
+  border: 1px solid #e2e8f0;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  letter-spacing: -0.5px;
+}
+
+.details p {
+  padding: 8px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 1.05rem;
+}
+
+.details p:last-child {
+  border-bottom: none;
+}
+
+img {
+  transition: transform 0.3s;
+}
+
+img:hover {
+  transform: scale(1.02);
+}
+
+/* Pulse Animation for Loading */
+@keyframes pulse {
+  0% { opacity: 0.6; }
+  50% { opacity: 1; }
+  100% { opacity: 0.6; }
+}

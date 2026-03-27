@@ -1,0 +1,67 @@
+<div class="create-container" style="max-width: 600px; margin: 2rem auto; padding: 2rem; background: white; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08);">
+  
+  <h2 style="text-align: center; color: #2c3e50; margin-bottom: 1.5rem; font-weight: 700;">Add New Car</h2>
+
+  <form [formGroup]="carForm" (ngSubmit)="save()" style="display: flex; flex-direction: column; gap: 15px;">
+
+    <div style="display: flex; gap: 15px;">
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Company</label>
+        <select formControlName="company" class="form-control">
+          <option value="" disabled>Select Brand</option>
+          <option *ngFor="let comp of companies" [value]="comp">{{ comp }}</option>
+        </select>
+      </div>
+
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Model</label>
+        <select formControlName="model" class="form-control" [attr.disabled]="models.length === 0 ? true : null">
+          <option value="" disabled>Select Model</option>
+          <option *ngFor="let mod of models" [value]="mod">{{ mod }}</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 15px;">
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Year</label>
+        <select formControlName="year" class="form-control">
+          <option value="" disabled>Select Year</option>
+          <option *ngFor="let y of years" [value]="y">{{ y }}</option>
+        </select>
+      </div>
+
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Price (₹)</label>
+        <input formControlName="price" type="number" placeholder="e.g. 850000" class="form-control">
+      </div>
+    </div>
+
+    <div style="display: flex; gap: 15px;">
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Color</label>
+        <input formControlName="color" placeholder="e.g. Pearl White" class="form-control">
+      </div>
+
+      <div style="flex: 1;">
+        <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Vehicle Number</label>
+        <input formControlName="carNumber" placeholder="e.g. MH12AB1234" class="form-control" style="text-transform: uppercase;">
+      </div>
+    </div>
+
+    <div>
+      <label style="display: block; margin-bottom: 5px; font-weight: 600; color: #555;">Image URL</label>
+      <input formControlName="image" placeholder="Paste image link here..." class="form-control">
+    </div>
+
+    <button type="submit" 
+            [disabled]="isSubmitting" 
+            style="background: #3498db; color: white; padding: 14px; font-size: 1rem; border: none; border-radius: 6px; cursor: pointer; transition: background 0.3s; margin-top: 10px; font-weight: bold;">
+      
+      <span *ngIf="!isSubmitting">Save Car Details</span>
+      <span *ngIf="isSubmitting">Saving... ⏳</span>
+      
+    </button>
+
+  </form>
+</div>

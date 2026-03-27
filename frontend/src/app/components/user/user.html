@@ -1,0 +1,36 @@
+<div class="container" style="max-width: 400px; margin: 4rem auto; padding: 2rem; background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+  
+  <h2 style="text-align: center; color: #333; margin-bottom: 20px;">
+    {{ isLogin ? 'Welcome Back' : 'Create Account' }}
+  </h2>
+
+  <div *ngIf="message" style="background: #ffebee; color: #c62828; padding: 10px; border-radius: 4px; margin-bottom: 15px; font-size: 0.9rem; border: 1px solid #ef9a9a;">
+    ⚠️ {{ message }}
+  </div>
+
+  <div *ngIf="!isLogin">
+    <input [(ngModel)]="username" placeholder="Username" class="form-control">
+  </div>
+  
+  <div>
+    <input [(ngModel)]="email" (input)="validateEmail()" placeholder="Email Address" class="form-control" [style.borderColor]="emailError ? 'red' : '#ddd'">
+    <small *ngIf="emailError" style="color: red; display: block; margin-top: -10px; margin-bottom: 10px;">
+      {{ emailError }}
+    </small>
+  </div>
+
+  <div>
+    <input [(ngModel)]="password" type="password" placeholder="Password" class="form-control">
+  </div>
+  
+  <button (click)="submit()" style="width: 100%; padding: 12px; background: #2c3e50; color: white; border: none; border-radius: 5px; font-size: 1rem; margin-top: 10px;">
+    {{ isLogin ? 'Login' : 'Register' }}
+  </button>
+  
+  <p style="text-align: center; margin-top: 15px; font-size: 0.9rem;">
+    {{ isLogin ? "New here?" : "Already have an account?" }}
+    <a (click)="toggle()" style="color: #3498db; cursor: pointer; font-weight: bold;">
+      {{ isLogin ? 'Create Account' : 'Login' }}
+    </a>
+  </p>
+</div>

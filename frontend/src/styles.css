@@ -1,0 +1,62 @@
+/* IMPORT GOOGLE FONT */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary: #2563eb;       /* Modern Blue */
+  --secondary: #1e293b;     /* Dark Slate */
+  --accent: #f59e0b;        /* Amber for highlights */
+  --danger: #ef4444;        /* Red for delete/errors */
+  --success: #10b981;       /* Green for price/success */
+  --bg-light: #f8fafc;      /* Very light grey background */
+  --glass: rgba(255, 255, 255, 0.95);
+  --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+
+body {
+  background-color: var(--bg-light);
+  color: var(--secondary);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* GLOBAL ANIMATION: Fade In Up */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Standard Button Styles */
+button {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+button:active {
+  transform: scale(0.98);
+}
+
+/* Form Controls */
+input, select {
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+}

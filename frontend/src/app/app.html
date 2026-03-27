@@ -1,0 +1,24 @@
+<nav class="navbar">
+  <div class="nav-container">
+    
+    <a [routerLink]="isLoggedIn ? '/cars' : '/'" class="nav-brand">
+      🚗 Car Vault
+    </a>
+    
+    <div class="nav-links">
+      <ng-container *ngIf="isLoggedIn">
+        <a routerLink="/cars" routerLinkActive="active">Dashboard</a>
+        <a routerLink="/create" routerLinkActive="active">Add Car</a>
+        <button (click)="logout()" class="btn-logout">Logout</button>
+      </ng-container>
+
+      <ng-container *ngIf="!isLoggedIn">
+        <span class="guest-text">Welcome, Guest</span>
+      </ng-container>
+    </div>
+  </div>
+</nav>
+
+<div class="main-content">
+  <router-outlet></router-outlet>
+</div>

@@ -1,0 +1,28 @@
+<div style="max-width: 400px; margin: 20px auto; padding: 20px; border: 1px solid #ccc;">
+  <h2>Update Car Details</h2>
+  
+  <form [formGroup]="carForm" (ngSubmit)="update()">
+    
+    <label>Company</label>
+    <input formControlName="company" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <label>Model</label>
+    <input formControlName="model" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <label>Price</label>
+    <input formControlName="price" type="number" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <label>Color</label>
+    <input formControlName="color" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <label>Car Number</label>
+    <input formControlName="carNumber" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <label>Image URL</label>
+    <input formControlName="image" class="form-control" style="width: 100%; margin-bottom: 10px;">
+
+    <button type="submit" [disabled]="carForm.invalid" style="background-color: #007bff; color: white; padding: 10px; border: none; cursor: pointer;">
+      Update Car
+    </button>
+  </form>
+</div>

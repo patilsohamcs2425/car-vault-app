@@ -1,0 +1,47 @@
+<div class="dashboard-container" style="padding: 20px;">
+  
+  <div class="filters-bar" style="background: white; padding: 15px; border-radius: 8px; display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+    
+    <input [(ngModel)]="searchTerm" (input)="loadCars()" placeholder="Search Car or Model..." style="flex: 2; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+
+    <select [(ngModel)]="selectedYear" (change)="loadCars()" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      <option value="">All Years</option>
+      <option *ngFor="let year of years" [value]="year">{{ year }}</option>
+    </select>
+
+    <select [(ngModel)]="selectedSort" (change)="loadCars()" style="flex: 1; padding: 10px; border: 1px solid #ddd; border-radius: 4px;">
+      <option value="">Sort By</option>
+      <option value="priceAsc">Price: Low to High</option>
+      <option value="priceDesc">Price: High to Low</option>
+      <option value="yearDesc">Newest First</option>
+      <option value="yearAsc">Oldest First</option>
+    </select>
+
+  </div>
+
+  <h2>Inventory Dashboard</h2>
+
+  <div class="car-grid">
+    <div *ngFor="let car of cars" class="car-card">
+      
+      <img [src]="car.image" alt="Car" class="car-image" onerror="this.src='https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/300px-No_image_available.svg.png'">
+      
+      <div class="card-body">
+        <h3 class="card-title">{{ car.company }} {{ car.model }}</h3>
+        <div class="card-info">
+          <span style="background: #eef2f3; padding: 2px 6px; border-radius: 4px; font-size: 0.8rem; margin-right: 5px;">{{ car.year }}</span>
+          <p>Color: {{ car.color }}</p>
+          <p class="price-tag">${{ car.price | number }}</p>
+        </div>
+      </div>
+
+      <div class="card-actions">
+        <div>
+          <button [routerLink]="['/view', car._id]" class="btn-view">View</button>
+          <button [routerLink]="['/update', car._id]" class="btn-edit">Edit</button>
+        </div>
+        <button (click)="deleteCar(car._id)" class="btn-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
